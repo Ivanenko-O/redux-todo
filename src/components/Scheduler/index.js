@@ -3,22 +3,33 @@ import React, { Component } from 'react';
 
 // Instruments
 import Styles from './styles';
-import initialState from './todos';
+// import initialState from './todos';
 import Checkbox from 'theme/assets/Checkbox';
 
 // Components
 import Task from 'components/Task';
 
+
 export default class Scheduler extends Component {
-    state = initialState;
+
+    static defaultProps = { todos: []};
+
+    state = {
+        textValue: '',
+    }
 
     handleSubmit = (event) => {
-        event.preventDefault();
-
-
-        console.log(this.props);
-        console.log('m');
+        event.preventDefault(); 
         
+        this.props.addTask(this.state.textValue);
+    }
+
+    handleChange = (e) => {
+        const { value } = e.target;
+
+        this.setState(() => ({
+            textValue: value,
+        }))
     }
 
     complete = (id) =>
@@ -53,8 +64,12 @@ export default class Scheduler extends Component {
         }));
 
     render () {
-        const { todos } = this.state;
+        const { textValue } = this.state;
+        const { todos } = this.props;
         const allCompleted = todos.every((todo) => todo.completed);
+        console.log(this.props);
+        console.log(todos);
+        
         const todoList = todos.map(({ id, message, completed, favorite }) => (
             <Task
                 changePriority = { this.changePriority }
@@ -76,8 +91,8 @@ export default class Scheduler extends Component {
                     </header>
                     <section>
                         <form onSubmit = { this.handleSubmit }>
-                            <input placeholder = 'Описание моей новой задачи' type = 'text' />
-                            <button >Добавить задачу</button>
+                            <input onChange = { this.handleChange } placeholder = 'Описание моей новой задачи' type = 'text' value = { textValue } />
+                            <button>Добавить задачу</button>
                         </form>
                         <ul>{todoList}</ul>
                     </section>

@@ -8,18 +8,16 @@ import taskActions from '../../actions/task';
 import Scheduler from 'components/Scheduler';
 class App extends Component {
     render () {
-        // debugger;
-        console.log( this.props);
-        return (<Scheduler actions = { this.props.actions } />);
-        // return (<Scheduler { ...this.props.actions } />);
+        // return (<Scheduler actions = { this.props.actions } />);
+        return (<Scheduler { ...this.props.actions } />);
     }
 }
 
 const mapStateToProps = (state) => {
     console.log(state);
-
+    
     return ({
-        tasks: state.tasks,
+        todos: state.tasks.toJS(),
     });
 };
 
