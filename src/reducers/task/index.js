@@ -4,18 +4,17 @@ import uuid from 'uuid';
 
 import defaultTodos from '../../components/Scheduler/todos';
 
-console.log(defaultTodos.todos);
 const initialState = List(defaultTodos.todos);
 
 export default (state = initialState, action) => {
 
     switch (action.type) {
         case types.ADD_TASK:
-            console.log(action.payload);
-            return state.push(Map({id: uuid.v4(), message: action.payload}));
+            return state.unshift(Map({id: uuid.v4(), message: action.payload}));
 
-        case types.DELETE_TASK:
-            return state.delete(action.payload);
+        case types.DELETE_TASK:        
+        return state.filter(({id}) => {            
+            return id !== action.payload });
 
         default:
             return state;

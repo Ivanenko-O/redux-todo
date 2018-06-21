@@ -6,16 +6,18 @@ import taskActions from '../../actions/task';
 
 // Components
 import Scheduler from 'components/Scheduler';
+
 class App extends Component {
     render () {
-        // return (<Scheduler actions = { this.props.actions } />);
-        return (<Scheduler { ...this.props.actions } />);
+        return (<Scheduler 
+            addTask = { this.props.actions.addTask } 
+            deleteTask = { this.props.actions.deleteTask }
+            todos = { this.props.todos }
+        />);
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log(state);
-    
+const mapStateToProps = (state) => {         
     return ({
         todos: state.tasks.toJS(),
     });

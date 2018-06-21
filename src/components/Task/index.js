@@ -1,5 +1,6 @@
 // Core
 import React, { Component } from 'react';
+import { func } from 'prop-types';
 import cx from 'classnames';
 
 // Instruments
@@ -11,9 +12,19 @@ import Star from 'theme/assets/Star';
 
 export default class Task extends Component {
 
+    static propTypes = {
+        deleteTask: func.isRequired,
+    }
+
+    handleDelete = () => {
+        const { id, deleteTask } = this.props;
+               
+        deleteTask(id);
+    }
     complete = () => {
         const { id, complete } = this.props;
-
+        
+        
         complete(id);
     };
 
@@ -52,7 +63,7 @@ export default class Task extends Component {
                         onClick = { this.changePriority }
                     />
                     <Edit color1 = '#3B8EF3' color2 = '#000' />
-                    <Delete color1 = '#3B8EF3' color2 = '#000'  />
+                    <Delete color1 = '#3B8EF3' color2 = '#000'  onClick = { this.handleDelete } />
                 </div>
             </li>
         );

@@ -1,27 +1,36 @@
 // Core
 import React, { Component } from 'react';
+import { func, array } from 'prop-types';
 
 // Instruments
 import Styles from './styles';
-// import initialState from './todos';
 import Checkbox from 'theme/assets/Checkbox';
 
 // Components
 import Task from 'components/Task';
 
 
+
 export default class Scheduler extends Component {
 
     static defaultProps = { todos: []};
 
+    static propTypes = {
+        addTask: func.isRequired,
+        todos:   array.isRequired,
+    }
     state = {
         textValue: '',
     }
 
     handleSubmit = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();       
         
-        this.props.addTask(this.state.textValue);
+        this.props.addTask(this.state.textValue); 
+
+        this.setState(() => ({
+            textValue: '',
+        }))      
     }
 
     handleChange = (e) => {
@@ -38,7 +47,6 @@ export default class Scheduler extends Component {
                 if (todo.id === id) {
                     todo.completed = !todo.completed;
                 }
-
                 return todo;
             }),
         }));
@@ -49,7 +57,6 @@ export default class Scheduler extends Component {
                 if (todo.id === id) {
                     todo.important = !todo.important;
                 }
-
                 return todo;
             }),
         }));
@@ -67,14 +74,13 @@ export default class Scheduler extends Component {
         const { textValue } = this.state;
         const { todos } = this.props;
         const allCompleted = todos.every((todo) => todo.completed);
-        console.log(this.props);
-        console.log(todos);
         
         const todoList = todos.map(({ id, message, completed, favorite }) => (
             <Task
                 changePriority = { this.changePriority }
                 complete = { this.complete }
                 completed = { completed }
+                deleteTask = { this.props.deleteTask }
                 favorite = { favorite }
                 id = { id }
                 key = { id }
@@ -94,7 +100,7 @@ export default class Scheduler extends Component {
                             <input onChange = { this.handleChange } placeholder = 'Описание моей новой задачи' type = 'text' value = { textValue } />
                             <button>Добавить задачу</button>
                         </form>
-                        <ul>{todoList}</ul>
+                        <ul>{ todoList ? todoList : 'No tasks' }</ul>
                     </section>
                     <footer>
                         <Checkbox
