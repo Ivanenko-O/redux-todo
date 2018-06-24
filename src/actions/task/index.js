@@ -20,8 +20,8 @@ export default Object.freeze({
         payload: id,
     }),
 
-    editTask: (task) => ({
-        type:    types.EDIT_TASK,
-        payload: task,
+    updateTasks: (msg) => ({
+        type:    types.UPDATE_TASKS,
+        payload: msg,
     }),
 })

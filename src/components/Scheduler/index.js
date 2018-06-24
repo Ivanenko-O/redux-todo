@@ -19,18 +19,29 @@ export default class Scheduler extends Component {
         addTask: func.isRequired,
         todos:   array.isRequired,
     }
+    
     state = {
         textValue: '',
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault();       
-        
-        this.props.addTask(this.state.textValue); 
+    handleSubmit = (e) => {
+        e.preventDefault();       
+
+        if(this.state.textValue) {
+            this.props.addTask(this.state.textValue); 
+        }
 
         this.setState(() => ({
             textValue: '',
-        }))      
+        }))
+    }
+
+    handleKeyPress = (e) => {
+        const enterKey = e.key === 'Enter';
+        
+        if (enterKey) {
+            this.handleSubmit(e);
+        }
     }
 
     handleChange = (e) => {
@@ -72,7 +83,8 @@ export default class Scheduler extends Component {
 
     render () {
         const { textValue } = this.state;
-        const { todos } = this.props;
+        const { todos, deleteTask, updateTasks  } = this.props;
+            
         const allCompleted = todos.every((todo) => todo.completed);
         
         const todoList = todos.map(({ id, message, completed, favorite }) => (
@@ -80,7 +92,8 @@ export default class Scheduler extends Component {
                 changePriority = { this.changePriority }
                 complete = { this.complete }
                 completed = { completed }
-                deleteTask = { this.props.deleteTask }
+                deleteTask = { deleteTask }
+                updateTasks = { updateTasks }
                 favorite = { favorite }
                 id = { id }
                 key = { id }
@@ -96,9 +109,16 @@ export default class Scheduler extends Component {
                         <input placeholder = 'Поиск' type = 'search' />
                     </header>
                     <section>
-                        <form onSubmit = { this.handleSubmit }>
-                            <input onChange = { this.handleChange } placeholder = 'Описание моей новой задачи' type = 'text' value = { textValue } />
-                            <button>Добавить задачу</button>
+                        <form 
+                            onSubmit = { this.handleSubmit } >
+                            <input 
+                                placeholder = 'Описание моей новой задачи' 
+                                type = 'text' 
+                                value = { textValue } 
+                                onChange = { this.handleChange } 
+                                onKeyPress = { this.handleKeyPress }
+                            />
+                             <button type = 'submit'>Добавить задачу</button>
                         </form>
                         <ul>{ todoList ? todoList : 'No tasks' }</ul>
                     </section>

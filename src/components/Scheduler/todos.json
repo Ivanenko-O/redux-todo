@@ -1,7 +1,19 @@
 {
     "todos": [
         {
-            "id": "xjh",
+            "id": "rrr",
+            "message": "Чекнуть веб конкурентов Blob.io",
+            "completed": false,
+            "favorite": true
+        },
+        {
+            "id": "ttt",
+            "message": "Сделать веб версию Blob.io",
+            "completed": false,
+            "favorite": true
+        },
+        {
+            "id": "ggf",
             "message": "Успешно пройти React-интенсив компании Lectrum",
             "completed": true,
             "favorite": true

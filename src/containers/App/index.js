@@ -9,9 +9,11 @@ import Scheduler from 'components/Scheduler';
 
 class App extends Component {
     render () {
+            
         return (<Scheduler 
             addTask = { this.props.actions.addTask } 
             deleteTask = { this.props.actions.deleteTask }
+            updateTasks = { this.props.actions.updateTasks }
             todos = { this.props.todos }
         />);
     }
