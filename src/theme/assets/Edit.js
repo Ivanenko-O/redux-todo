@@ -6,16 +6,23 @@ import transform from './Svg';
 
 class EditIcon extends Component {
     render () {
-        const { hover, color1, color2 } = this.props;
+        const { hover, color1, color2, editing } = this.props;
 
         const fill = hover ? color1 : color2;
+        console.log(editing);
+        
 
         return (
-            <g>
-                <path
-                    d = 'M19.4 3.1L18 1.7 8.6 11l1.4 1.4 9.4-9.3zM19.3.3l1.4 1.4c.4.4.4 1 0 1.4L10.5 13.3c-.1.1-.2.2-.3.2l-2.9 1c-.3.1-.7-.1-.8-.4v-.4l1-2.9c0-.1.1-.2.2-.3L17.9.3c.4-.4 1-.4 1.4 0zM17 9h1v9.5c0 1.4-1.1 2.5-2.5 2.5h-13C1.1 21 0 19.9 0 18.5v-13C0 4.1 1.1 3 2.5 3H12v1H2.5C1.7 4 1 4.7 1 5.5v13c0 .8.7 1.5 1.5 1.5h13c.8 0 1.5-.7 1.5-1.5V9z'
-                    fill = { fill }
-                />
+            <g> { !editing 
+                ? <path
+                d = 'M19.4 3.1L18 1.7 8.6 11l1.4 1.4 9.4-9.3zM19.3.3l1.4 1.4c.4.4.4 1 0 1.4L10.5 13.3c-.1.1-.2.2-.3.2l-2.9 1c-.3.1-.7-.1-.8-.4v-.4l1-2.9c0-.1.1-.2.2-.3L17.9.3c.4-.4 1-.4 1.4 0zM17 9h1v9.5c0 1.4-1.1 2.5-2.5 2.5h-13C1.1 21 0 19.9 0 18.5v-13C0 4.1 1.1 3 2.5 3H12v1H2.5C1.7 4 1 4.7 1 5.5v13c0 .8.7 1.5 1.5 1.5h13c.8 0 1.5-.7 1.5-1.5V9z'
+                fill = { fill }
+                 /> 
+                : <path
+                d = 'M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z'
+                fill = { color1 }
+                 /> }
+                
             </g>
         );
     }

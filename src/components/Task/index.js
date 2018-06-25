@@ -1,6 +1,6 @@
 // Core
 import React, { Component } from 'react';
-import { func, string } from 'prop-types';
+import { func, string, bool } from 'prop-types';
 import cx from 'classnames';
 
 // Instruments
@@ -13,14 +13,18 @@ import Star from 'theme/assets/Star';
 export default class Task extends Component {
 
     static propTypes = {
+        changePriority: func.isRequired,
         deleteTask:     func.isRequired,
         updateTasks:    func.isRequired,
+        id:             string.isRequired,
         message:        string.isRequired,
+        favorite:       bool.isRequired,
     }
 
 
     state = {
         editing: false,
+        favorite: false,
         message: this.props.message,
     }
 
@@ -40,7 +44,7 @@ export default class Task extends Component {
 
 
     handleEdit = () => {        
-        const { updateTasks, id, message: prevMessage } = this.props;
+        const { id, message: prevMessage, updateTasks } = this.props;
         const { editing, message } = this.state;
 
         this.setState({
@@ -57,9 +61,10 @@ export default class Task extends Component {
 
                 return;
             }
-             updateTasks([
-                {id, message}
-            ]);
+             updateTasks( [{
+                    id, 
+                    message,
+                }] );
         }
         this.setState({
             editing: !editing,
@@ -82,21 +87,25 @@ export default class Task extends Component {
 
 
     changePriority = () => {
-        const { id, changePriority } = this.props;
-
-        changePriority(id);
+        const { id, favorite, changePriority } = this.props;
+  
+        changePriority( {
+            id,
+            favorite,
+        })
     };
 
 
     render () {
-        const { completed, important } = this.props;
+        const { completed, favorite } = this.props;        
         const { message, editing } = this.state;
         const styles = cx(Styles.task, {
             [Styles.completed]: completed,
+           
         });
 
         return (
-            <li className = { styles }>
+            <li className = { styles } >
                 <div>
                     <Checkbox
                         checked = { completed }
@@ -117,13 +126,22 @@ export default class Task extends Component {
                 </div>
                 <div>
                     <Star
-                        checked = { important }
+                        favorite = { favorite }
                         color1 = '#3B8EF3'
                         color2 = '#000'
                         onClick = { this.changePriority }
                     />
-                    <Edit color1 = '#3B8EF3' color2 = '#000' onClick = { this.handleEdit } />
-                    <Delete color1 = '#3B8EF3' color2 = '#000'  onClick = { this.handleDelete } />
+                    <Edit 
+                        color1 = '#3B8EF3' 
+                        color2 = '#000' 
+                        onClick = { this.handleEdit } 
+                        editing = { editing }
+                    />
+                    <Delete 
+                        color1 = '#3B8EF3' 
+                        color2 = '#000'  
+                        onClick = { this.handleDelete } 
+                    />
                 </div>
             </li>
         );

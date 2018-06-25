@@ -24,4 +24,9 @@ export default Object.freeze({
         type:    types.UPDATE_TASKS,
         payload: msg,
     }),
+
+    changePriority: (task) => ({
+        type:    types.FAVORITE_TASK,
+        payload: task,
+    })
 })

@@ -8,12 +8,12 @@ import taskActions from '../../actions/task';
 import Scheduler from 'components/Scheduler';
 
 class App extends Component {
-    render () {
-            
+    render () {            
         return (<Scheduler 
             addTask = { this.props.actions.addTask } 
             deleteTask = { this.props.actions.deleteTask }
             updateTasks = { this.props.actions.updateTasks }
+            changePriority = { this.props.actions.changePriority }
             todos = { this.props.todos }
         />);
     }

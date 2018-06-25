@@ -9,8 +9,6 @@ import Checkbox from 'theme/assets/Checkbox';
 // Components
 import Task from 'components/Task';
 
-
-
 export default class Scheduler extends Component {
 
     static defaultProps = { todos: []};
@@ -83,17 +81,18 @@ export default class Scheduler extends Component {
 
     render () {
         const { textValue } = this.state;
-        const { todos, deleteTask, updateTasks  } = this.props;
+        const { todos, changePriority, deleteTask, updateTasks } = this.props;
             
         const allCompleted = todos.every((todo) => todo.completed);
         
         const todoList = todos.map(({ id, message, completed, favorite }) => (
             <Task
-                changePriority = { this.changePriority }
+                // changePriority = { this.changePriority }
                 complete = { this.complete }
                 completed = { completed }
                 deleteTask = { deleteTask }
                 updateTasks = { updateTasks }
+                changePriority = { changePriority }
                 favorite = { favorite }
                 id = { id }
                 key = { id }

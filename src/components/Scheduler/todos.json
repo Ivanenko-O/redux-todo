@@ -13,12 +13,6 @@
             "favorite": true
         },
         {
-            "id": "ggf",
-            "message": "Успешно пройти React-интенсив компании Lectrum",
-            "completed": true,
-            "favorite": true
-        },
-        {
             "id": "xjr",
             "message": "Взять автограф у Джареда Лето",
             "completed": false,
@@ -40,7 +34,7 @@
             "id": "xph",
             "message": "Научиться играть на барабанах",
             "completed": false,
-            "favorite": false
+            "favorite": true
         }
     ]
 }
