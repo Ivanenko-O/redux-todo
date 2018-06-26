@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
                     }
                     return task;
                })
-            }).sort(compareFavorite);            
+            }).sort(compareFavorite);
 
         default:
             return state;

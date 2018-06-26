@@ -7,10 +7,7 @@ import transform from './Svg';
 class EditIcon extends Component {
     render () {
         const { hover, color1, color2, editing } = this.props;
-
-        const fill = hover ? color1 : color2;
-        console.log(editing);
-        
+        const fill = hover ? color1 : color2;      
 
         return (
             <g> { !editing 

@@ -20,7 +20,18 @@ export default class Scheduler extends Component {
     
     state = {
         textValue: '',
+        searchValue: '',
     }
+
+
+    handleChange = (e) => {
+        const { value } = e.target;
+
+        this.setState(() => ({
+            textValue: value,
+        }))      
+    };
+
 
     handleSubmit = (e) => {
         e.preventDefault();       
@@ -32,23 +43,23 @@ export default class Scheduler extends Component {
         this.setState(() => ({
             textValue: '',
         }))
-    }
+    };
 
+    
     handleKeyPress = (e) => {
-        const enterKey = e.key === 'Enter';
+        const enterKey = e.key === 'Enter';     
         
-        if (enterKey) {
-            this.handleSubmit(e);
-        }
-    }
+        if (enterKey) this.handleSubmit(e);
+    };
 
-    handleChange = (e) => {
-        const { value } = e.target;
 
-        this.setState(() => ({
-            textValue: value,
-        }))
-    }
+    handleSearch = (e) => {        
+        const { value: searchValue } = e.target;
+        
+        this.setState( () => ({
+            searchValue,
+        }))        
+    };
 
     complete = (id) =>
         this.setState(({ todos }) => ({
@@ -60,15 +71,7 @@ export default class Scheduler extends Component {
             }),
         }));
 
-    changePriority = (id) =>
-        this.setState(({ todos }) => ({
-            todos: todos.map((todo) => {
-                if (todo.id === id) {
-                    todo.important = !todo.important;
-                }
-                return todo;
-            }),
-        }));
+
 
     completeAll = () =>
         this.setState(({ todos }) => ({
@@ -79,20 +82,21 @@ export default class Scheduler extends Component {
             }),
         }));
 
+
     render () {
-        const { textValue } = this.state;
+        const { textValue, searchValue } = this.state;
         const { todos, changePriority, deleteTask, updateTasks } = this.props;
-            
+
+        const tasksFiltered = todos.filter((todo) => todo.message.includes(searchValue));        
         const allCompleted = todos.every((todo) => todo.completed);
         
-        const todoList = todos.map(({ id, message, completed, favorite }) => (
+        const todoList = tasksFiltered.map(({ id, message, completed, favorite }) => (
             <Task
-                // changePriority = { this.changePriority }
                 complete = { this.complete }
                 completed = { completed }
+                changePriority = { changePriority }
                 deleteTask = { deleteTask }
                 updateTasks = { updateTasks }
-                changePriority = { changePriority }
                 favorite = { favorite }
                 id = { id }
                 key = { id }
@@ -105,7 +109,12 @@ export default class Scheduler extends Component {
                 <main>
                     <header>
                         <h1>Планировщик задач</h1>
-                        <input placeholder = 'Поиск' type = 'search' />
+                        <input 
+                            placeholder = 'Поиск' 
+                            type = 'search'
+                            onChange = { this.handleSearch }
+                            onKeyPress = { this.handleKeyPress }
+                         />
                     </header>
                     <section>
                         <form 

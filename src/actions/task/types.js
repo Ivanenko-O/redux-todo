@@ -4,4 +4,5 @@ export default Object.freeze({
     DELETE_TASK:      'DELETE_TASK',
     UPDATE_TASKS:     'UPDATE_TASKS',
     FAVORITE_TASK:    'FAVORITE_TASK',
+    SEARCH_TASK:      'SEARCH_TASK',
 });

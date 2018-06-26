@@ -14,6 +14,7 @@ class App extends Component {
             deleteTask = { this.props.actions.deleteTask }
             updateTasks = { this.props.actions.updateTasks }
             changePriority = { this.props.actions.changePriority }
+            searchTask = { this.props.actions.searchTask }
             todos = { this.props.todos }
         />);
     }
