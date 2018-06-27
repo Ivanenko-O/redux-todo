@@ -9,7 +9,7 @@
         {
             "id": "ttt",
             "message": "Сделать веб версию Blob.io",
-            "completed": false,
+            "completed": true,
             "favorite": true
         },
         {

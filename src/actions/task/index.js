@@ -29,4 +29,8 @@ export default Object.freeze({
         type:    types.FAVORITE_TASK,
         payload: task,
     }),
+    completeAll: (tasks) => ({
+        type:     types.COMPLETE_ALL,
+        payload:  tasks,
+    })
 })

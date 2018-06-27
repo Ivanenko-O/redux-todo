@@ -14,8 +14,9 @@ export default class Scheduler extends Component {
     static defaultProps = { todos: []};
 
     static propTypes = {
-        addTask: func.isRequired,
-        todos:   array.isRequired,
+        addTask:     func.isRequired,
+        completeAll: func.isRequired,
+        todos:       array.isRequired,
     }
     
     state = {
@@ -61,6 +62,7 @@ export default class Scheduler extends Component {
         }))        
     };
 
+
     complete = (id) =>
         this.setState(({ todos }) => ({
             todos: todos.map((todo) => {
@@ -72,23 +74,19 @@ export default class Scheduler extends Component {
         }));
 
 
+    toggleCompleteAll = () => {
+        let { completeAll } = this.props;
 
-    completeAll = () =>
-        this.setState(({ todos }) => ({
-            todso: todos.map((todo) => {
-                todo.completed = true;
+        completeAll();
+    }
 
-                return todo;
-            }),
-        }));
 
 
     render () {
         const { textValue, searchValue } = this.state;
-        const { todos, changePriority, deleteTask, updateTasks } = this.props;
+        const { todos, changePriority, deleteTask, updateTasks, completed } = this.props;
+        const tasksFiltered = todos.filter((todo) => todo.message.includes(searchValue));
 
-        const tasksFiltered = todos.filter((todo) => todo.message.includes(searchValue));        
-        const allCompleted = todos.every((todo) => todo.completed);
         
         const todoList = tasksFiltered.map(({ id, message, completed, favorite }) => (
             <Task
@@ -132,10 +130,10 @@ export default class Scheduler extends Component {
                     </section>
                     <footer>
                         <Checkbox
-                            checked = { allCompleted }
+                            checked = { completed }
                             color1 = '#363636'
                             color2 = '#fff'
-                            onClick = { this.completeAll }
+                            onClick = { this.toggleCompleteAll }
                         />
                         <code>Все задачи выполнены</code>
                     </footer>

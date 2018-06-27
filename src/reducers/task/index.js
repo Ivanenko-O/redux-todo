@@ -41,6 +41,22 @@ export default (state = initialState, action) => {
                })
             }).sort(compareFavorite);
 
+        case types.COMPLETE_ALL:
+            return state.update((todos) => {
+
+                if (!todos.every((task) => task.completed)) {
+                    return todos.map((task) => {          
+                        task.completed = true;                    
+                        return task;
+                    }) 
+                } else  {
+                    return todos.map((task) => {                                     
+                        task.completed = false;                    
+                        return task; 
+                    })
+                }
+            })
+
         default:
             return state;
     }
