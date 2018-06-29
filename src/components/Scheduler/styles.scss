@@ -123,3 +123,28 @@
         }
     }
 }
+
+
+.todoInStart {
+    transform: scale(.3);
+    opacity: .01;
+}
+
+.todoInEnd {
+    transform: translateX(0%);
+    transition: opacity 500ms ease-out,
+                transform 500ms ease-out;
+    opacity: 1;
+}
+
+.todoOutStart {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.todoOutEnd {
+    transform: translateX(100%);
+    transition: opacity 500ms ease-out,
+                transform 500ms ease-out;
+    opacity: .01;
+}

@@ -1,6 +1,9 @@
 // Core
 import React, { Component } from 'react';
 import { func, array } from 'prop-types';
+// import { CSSTransition } from 'react-transition-group';
+// import TransitionGroup from 'react-transition-group/TransitionGroup';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 // Instruments
 import Styles from './styles';
@@ -56,7 +59,9 @@ export default class Scheduler extends Component {
 
     handleSearch = (e) => {        
         const { value: searchValue } = e.target;
-        
+
+        searchValue.toLowerCase();
+
         this.setState( () => ({
             searchValue,
         }))        
@@ -80,26 +85,39 @@ export default class Scheduler extends Component {
         completeAll();
     }
 
-
-
     render () {
         const { textValue, searchValue } = this.state;
         const { todos, changePriority, deleteTask, updateTasks, completed } = this.props;
-        const tasksFiltered = todos.filter((todo) => todo.message.includes(searchValue));
+        const tasksFiltered = todos.filter((todo) => 
+            todo.message
+                .toLowerCase()
+                .includes(searchValue)
+                );
 
-        
         const todoList = tasksFiltered.map(({ id, message, completed, favorite }) => (
-            <Task
-                complete = { this.complete }
-                completed = { completed }
-                changePriority = { changePriority }
-                deleteTask = { deleteTask }
-                updateTasks = { updateTasks }
-                favorite = { favorite }
-                id = { id }
+            <CSSTransition
+                classNames = { {
+                    enter:        Styles.todoInStart,
+                    enterActive:  Styles.todoInEnd,
+                    exit:         Styles.todoOutStart,
+                    exitActive:   Styles.todoOutEnd
+                } }
+                in = { true }
                 key = { id }
-                message = { message }
-            />
+                timeout = { 500 } >
+
+                <Task
+                    complete = { this.complete }
+                    completed = { completed }
+                    changePriority = { changePriority }
+                    deleteTask = { deleteTask }
+                    updateTasks = { updateTasks }
+                    favorite = { favorite }
+                    id = { id }
+                    key = { id }
+                    message = { message }
+                />
+            </CSSTransition>
         ));
 
         return (
@@ -126,7 +144,10 @@ export default class Scheduler extends Component {
                             />
                              <button type = 'submit'>Добавить задачу</button>
                         </form>
-                        <ul>{ todoList ? todoList : 'No tasks' }</ul>
+                        { todoList.length 
+                            ? <ul><TransitionGroup>{ todoList }</TransitionGroup></ul> 
+                            : <h1>Hey, time to plan dreams</h1> }
+                        
                     </section>
                     <footer>
                         <Checkbox
